@@ -1,30 +1,37 @@
 <script>
-	export let name;
+	import Nested from './Nested.svelte';
+	let name = 'svelte';
+	let src = '/image.gif';
+	let string = `this string contains some <Strong>HTML!!</Strong>`
+	let count = 0
+	$: doubled = count * 2;
+	$: {
+		console.log(`the count is ${count}`);
+		console.log(`this will also be logged whenever count changes`);
+	}
+	$: if(count >= 10){
+		alert(`count is dangerously high!!`);
+		count = 0;
+	}
+	function increment(){
+		count += 1;
+	}
 </script>
-
-<main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
-</main>
-
+<h1>hello {name.toUpperCase()}</h1>
+<!-- svelte-ignore a11y-missing-attribute -->
+<img src={src} alt="{name} dances">
+<p>this is a paragraph</p>
+<Nested/>
+<p>{@html string}</p>
+<button on:click={increment}>
+Clicked {count}
+{count === 1 ? 'time' : "times"}
+</button>
+<p>{count} doubled is {doubled}</p>
 <style>
-	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
-	}
-
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
+	p {
+		color: goldenrod;
+		font-family: 'Courier New', Courier, monospace;
+		font-size: 2em;
 	}
 </style>
